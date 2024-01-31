@@ -7,7 +7,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "lint:fix": "next lint --fix"
+    "lint:fix": "next lint --fix",
+    "mock": "prism mock https://raw.githack.com/OAI/OpenAPI-Specification/master/examples/v3.0/petstore-expanded.yaml"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.3.4",
@@ -29,6 +30,7 @@
     "zod": "^3.22.4"
   },
   "devDependencies": {
+    "@stoplight/prism-cli": "^5.5.3",
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
