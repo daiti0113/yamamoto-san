@@ -10,10 +10,10 @@ type FormState = {
 }
 
 export default function SampleFormPage() {
-    const form = useForm<FormState>()
+  const form = useForm<FormState>()
 
-    const onSubmit = (data: FormState) => console.log(data)
- 
+  const onSubmit = (data: FormState) => console.log(data)
+
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
