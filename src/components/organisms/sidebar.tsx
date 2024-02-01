@@ -1,6 +1,7 @@
 import { cn } from "@/lib/utils"
 import { Button } from "../atoms/button"
 import { Users, Building } from "lucide-react"
+import Link from "next/link"
 
 type SidebarProps = {
   className?: string
@@ -16,14 +17,18 @@ export const Sidebar: React.FC<SidebarProps> = ({ className }) => {
             案件管理
           </h2>
           <div className="space-y-1">
-            <Button variant="secondary" className="w-full justify-start gap-2">
-              <Users size={20} />
-              案件管理
-            </Button>
-            <Button variant="ghost" className="w-full justify-start gap-2">
-              <Users size={20} />
-              候補者
-            </Button>
+            <Link href="/progresses">
+              <Button variant="secondary" className="w-full justify-start gap-2">
+                <Users size={20} />
+                案件管理
+              </Button>
+            </Link>
+            <Link href="/sample">
+              <Button variant="ghost" className="w-full justify-start gap-2">
+                <Users size={20} />
+                候補者
+              </Button>
+            </Link>
           </div>
         </div>
         <div className="px-3 py-2">
@@ -31,10 +36,12 @@ export const Sidebar: React.FC<SidebarProps> = ({ className }) => {
             マスタ
           </h2>
           <div className="space-y-1">
-            <Button variant="ghost" className="w-full justify-start gap-2">
-              <Building size={20} />
-              取引先
-            </Button>
+            <Link href="/sample/form">
+              <Button variant="ghost" className="w-full justify-start gap-2">
+                <Building size={20} />
+                取引先
+              </Button>
+            </Link>
             <Button variant="ghost" className="w-full justify-start gap-2">
               <Building size={20} />
               求人票
