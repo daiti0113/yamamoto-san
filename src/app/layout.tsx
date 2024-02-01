@@ -4,6 +4,7 @@ import "./globals.css"
 import { cn } from "@/lib/utils"
 import { Providers } from "./Providers"
 import { Header } from "@/components/organisms/Header"
+import { Sidebar } from "@/components/organisms/sidebar"
 
 export const fontSans = FontSans({
   subsets: ["latin"],
@@ -25,7 +26,12 @@ export default function RootLayout({
       <Providers>
         <body className={cn("min-h-screen bg-background font-sans antialiased", fontSans.variable)}>
           <Header />
-          {children}
+          <div className="flex">
+            <Sidebar className="h-full max-w-80 border-r-[1px]" />
+            <main className="py-7 px-6 w-full">
+              {children}
+            </main>
+          </div>
         </body>
       </Providers>
     </html>
