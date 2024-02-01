@@ -24,9 +24,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <Providers>
-        <body className={cn("min-h-screen bg-background font-sans antialiased", fontSans.variable)}>
+        <body className={cn("h-screen w-screen flex flex-col bg-background font-sans antialiased", fontSans.variable)}>
           <Header />
-          <div className="flex">
+          <div className="flex h-full">
             <Sidebar className="h-full max-w-80 border-r-[1px]" />
             <main className="py-7 px-6 w-full">
               {children}
