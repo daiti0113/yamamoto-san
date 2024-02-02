@@ -151,6 +151,30 @@ export interface User {
      * @memberof User
      */
     'applicationCount': number;
+    /**
+     * 
+     * @type {number}
+     * @memberof User
+     */
+    'progress': number;
+    /**
+     * 
+     * @type {number}
+     * @memberof User
+     */
+    'priority': number;
+    /**
+     * 
+     * @type {string}
+     * @memberof User
+     */
+    'personInCharge'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof User
+     */
+    'updatedAt'?: string;
 }
 
 /**

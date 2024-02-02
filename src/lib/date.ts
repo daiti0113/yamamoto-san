@@ -11,3 +11,5 @@ export const calcAge = (birthday: string) => {
   const thisBirthday = dayjs(`${today.year()}-${birthDate.month() + 1}-${birthDate.date()}`)
   return today.isBefore(thisBirthday) ? baseAge - 1 : baseAge
 }
+
+export default dayjs

@@ -37,7 +37,7 @@ import {
 } from "@/components/organisms/DropdownMenu"
 import { useState } from "react"
 import { User } from "@/types/typescript-axios"
-import { calcAge } from "@/lib/date"
+import dayjs, { calcAge } from "@/lib/date"
 
 const SamplePage = ({ }) => {
   return (
@@ -256,6 +256,25 @@ export const columns: ColumnDef<User>[] = [
     header: "応募数"
   },
   {
+    accessorKey: "progress",
+    header: "進捗",
+    accessorFn: (row) => progresses[row.progress as keyof typeof progresses]
+  },
+  {
+    accessorKey: "priority",
+    header: "優先度",
+    accessorFn: (row) => priorities[row.priority as keyof typeof priorities]
+  },
+  {
+    accessorKey: "personInCharge",
+    header: "担当"
+  },
+  {
+    accessorKey: "updatedAt",
+    header: "最終更新日",
+    accessorFn: (row) => dayjs(row.updatedAt).format("YYYY/MM/DD")
+  },
+  {
     id: "actions",
     cell: ({ row }) => {
       const user = row.original
@@ -296,7 +315,11 @@ export const users: User[] = [
     createDate: "2023-12-01",
     referralCount: 23,
     preferredWorkLocation: "大阪府",
-    applicationCount: 11
+    applicationCount: 11,
+    progress: 4,
+    priority: 1,
+    personInCharge: "赤井 大輔",
+    updatedAt: "2024-01-12"
   },
   {
     id: 2,
@@ -308,6 +331,23 @@ export const users: User[] = [
     createDate: "2024-01-23",
     referralCount: 1,
     preferredWorkLocation: "沖縄県",
-    applicationCount: 4
+    applicationCount: 4,
+    progress: 2,
+    priority: 2,
+    personInCharge: "砂川 大地",
+    updatedAt: "2024-01-13"
   }
 ]
+
+const progresses = {
+  1: "書類選考",
+  2: "1次調整中",
+  3: "2次調整中",
+  4: "3次調整中"
+}
+
+const priorities = {
+  1: "高",
+  2: "中",
+  3: "低"
+}

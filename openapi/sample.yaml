@@ -197,7 +197,7 @@ components:
           format: date
           description: The date that the user was created.
         referralCount:
-          type: number
+          type: integer
           x-stoplight:
             id: ctfy6h643qmgp
           default: 0
@@ -206,10 +206,28 @@ components:
           x-stoplight:
             id: l06bpoyyizpyz
         applicationCount:
-          type: number
+          type: integer
           x-stoplight:
             id: 6sc4iqd6lrfbg
           default: 0
+        progress:
+          type: integer
+          x-stoplight:
+            id: 7e3l5rv7s66q7
+          default: 1
+        priority:
+          type: integer
+          x-stoplight:
+            id: p2sve7amfuvww
+          default: 1
+        personInCharge:
+          type: string
+          x-stoplight:
+            id: ufwd499kydwbl
+        updatedAt:
+          type: string
+          x-stoplight:
+            id: jnxe0an5jlzd8
       required:
         - id
         - firstName
@@ -218,3 +236,5 @@ components:
         - emailVerified
         - referralCount
         - applicationCount
+        - progress
+        - priority
