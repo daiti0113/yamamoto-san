@@ -12,6 +12,7 @@ import {
   getSortedRowModel,
   useReactTable
 } from "@tanstack/react-table"
+
 import {
   Table,
   TableBody,
@@ -20,6 +21,28 @@ import {
   TableHeader,
   TableRow
 } from "@/components/organisms/Table"
+
+import {
+  Dialog,
+  DialogClose,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger
+} from "@/components/organisms/Dialog"
+
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectLabel,
+  SelectTrigger,
+  SelectValue
+} from "@/components/molecules/select"
+
 import { ArrowUpDown, MoreHorizontal } from "lucide-react"
 
 import { Button } from "@/components/atoms/button"
@@ -40,6 +63,7 @@ import { User } from "@/types/typescript-axios"
 import dayjs, { calcAge } from "@/lib/date"
 import { defaultApi } from "@/lib/api"
 import { useQuery } from "@tanstack/react-query"
+import { Label } from "@/components/molecules/label"
 
 const ApplicantsPage = ({ }) => {
   const { data, isLoading } = useQuery({ queryKey: ["fetchApplicants"], queryFn: () => defaultApi.getUsers().then((response) => response.data) })
@@ -108,34 +132,37 @@ export function DataTable<TData, TValue>({
           }
           className="max-w-sm"
         />
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button variant="outline" className="ml-auto">
-              Columns
-            </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align="end">
-            {table
-              .getAllColumns()
-              .filter(
-                (column) => column.getCanHide()
-              )
-              .map((column) => {
-                return (
-                  <DropdownMenuCheckboxItem
-                    key={column.id}
-                    className="capitalize"
-                    checked={column.getIsVisible()}
-                    onCheckedChange={(value) =>
-                      column.toggleVisibility(!!value)
-                    }
-                  >
-                    {column.id}
-                  </DropdownMenuCheckboxItem>
+        <div className="flex gap-2 ml-auto">
+          <AddApplicantModal />
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button variant="outline">
+                項目編集
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="end">
+              {table
+                .getAllColumns()
+                .filter(
+                  (column) => column.getCanHide()
                 )
-              })}
-          </DropdownMenuContent>
-        </DropdownMenu>
+                .map((column) => {
+                  return (
+                    <DropdownMenuCheckboxItem
+                      key={column.id}
+                      className="capitalize"
+                      checked={column.getIsVisible()}
+                      onCheckedChange={(value) =>
+                        column.toggleVisibility(!!value)
+                      }
+                    >
+                      {column.id}
+                    </DropdownMenuCheckboxItem>
+                  )
+                })}
+            </DropdownMenuContent>
+          </DropdownMenu>
+        </div>
       </div>
       <div className="rounded-md border">
         <Table>
@@ -324,4 +351,63 @@ const priorities = {
   1: "高",
   2: "中",
   3: "低"
+}
+
+// eslint-disable-next-line max-lines-per-function
+const AddApplicantModal = () => {
+  return (
+    <Dialog>
+      <DialogTrigger asChild>
+        <Button variant="outline">候補者登録</Button>
+      </DialogTrigger>
+      <DialogContent className="sm:max-w-[425px]">
+        <DialogHeader>
+          <DialogTitle>候補者登録</DialogTitle>
+          <DialogDescription>
+            候補者を登録できます。
+          </DialogDescription>
+        </DialogHeader>
+        <div className="grid gap-4 py-4">
+          <div className="grid grid-cols-4 items-center gap-4">
+            <Label htmlFor="name" className="text-right">
+              名前
+            </Label>
+            <Input id="name" placeholder="候補 太郎" className="col-span-3" />
+          </div>
+          <div className="grid grid-cols-4 items-center gap-4">
+            <Label htmlFor="username" className="text-right">
+              登録ルート
+            </Label>
+            <RegistRootSelect />
+          </div>
+        </div>
+        <DialogFooter>
+          <DialogClose>
+            <Button variant="outline">キャンセル</Button>
+          </DialogClose>
+          <Button type="submit">登録する</Button>
+        </DialogFooter>
+      </DialogContent>
+    </Dialog>
+  )
+}
+
+const RegistRootSelect = () => {
+  return (
+    <Select>
+      <SelectTrigger className="w-[180px]">
+        <SelectValue placeholder="登録ルートを選択してください" />
+      </SelectTrigger>
+      <SelectContent>
+        <SelectGroup>
+          <SelectLabel>登録ルート</SelectLabel>
+          <SelectItem value="apple">Apple</SelectItem>
+          <SelectItem value="banana">Banana</SelectItem>
+          <SelectItem value="blueberry">Blueberry</SelectItem>
+          <SelectItem value="grapes">Grapes</SelectItem>
+          <SelectItem value="pineapple">Pineapple</SelectItem>
+        </SelectGroup>
+      </SelectContent>
+    </Select>
+  )
 }

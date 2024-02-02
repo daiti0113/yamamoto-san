@@ -9,6 +9,7 @@ type SidebarProps = {
 
 // eslint-disable-next-line max-lines-per-function
 export const Sidebar: React.FC<SidebarProps> = ({ className }) => {
+  
   return (
     <aside className={cn("pb-12", className)}>
       <div className="space-y-4 py-4">
