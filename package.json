@@ -8,8 +8,8 @@
     "start": "next start",
     "lint": "next lint",
     "lint:fix": "next lint --fix",
-    "mock": "prism mock https://raw.githack.com/OAI/OpenAPI-Specification/master/examples/v3.0/petstore-expanded.yaml",
-    "generate-typescript-axios": "openapi-generator-cli generate -g typescript-axios -i https://raw.githack.com/OAI/OpenAPI-Specification/master/examples/v3.0/petstore-expanded.yaml -o ./src/types/typescript-axios"
+    "mock": "prism mock ./openapi/sample.yaml",
+    "generate-typescript-axios": "openapi-generator-cli generate -g typescript-axios -i ./openapi/sample.yaml -o ./src/types/typescript-axios"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.3.4",
