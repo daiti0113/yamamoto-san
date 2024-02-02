@@ -252,6 +252,10 @@ export const columns: ColumnDef<User>[] = [
     header: "紹介数"
   },
   {
+    accessorKey: "applicationCount",
+    header: "応募数"
+  },
+  {
     id: "actions",
     cell: ({ row }) => {
       const user = row.original
@@ -291,7 +295,8 @@ export const users: User[] = [
     emailVerified: true,
     createDate: "2023-12-01",
     referralCount: 23,
-    preferredWorkLocation: "大阪府"
+    preferredWorkLocation: "大阪府",
+    applicationCount: 11
   },
   {
     id: 2,
@@ -302,6 +307,7 @@ export const users: User[] = [
     emailVerified: true,
     createDate: "2024-01-23",
     referralCount: 1,
-    preferredWorkLocation: "沖縄県"
+    preferredWorkLocation: "沖縄県",
+    applicationCount: 4
   }
 ]
