@@ -200,10 +200,16 @@ components:
           type: number
           x-stoplight:
             id: ctfy6h643qmgp
+          default: 0
         preferredWorkLocation:
           type: string
           x-stoplight:
             id: l06bpoyyizpyz
+        applicationCount:
+          type: number
+          x-stoplight:
+            id: 6sc4iqd6lrfbg
+          default: 0
       required:
         - id
         - firstName
@@ -211,3 +217,4 @@ components:
         - email
         - emailVerified
         - referralCount
+        - applicationCount

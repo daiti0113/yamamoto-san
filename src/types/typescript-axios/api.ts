@@ -145,6 +145,12 @@ export interface User {
      * @memberof User
      */
     'preferredWorkLocation'?: string;
+    /**
+     * 
+     * @type {number}
+     * @memberof User
+     */
+    'applicationCount': number;
 }
 
 /**
