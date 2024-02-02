@@ -59,11 +59,13 @@ import {
   DropdownMenuTrigger
 } from "@/components/organisms/DropdownMenu"
 import { useState } from "react"
-import { User } from "@/types/typescript-axios"
+import { PostUserRequest, User } from "@/types/typescript-axios"
 import dayjs, { calcAge } from "@/lib/date"
 import { defaultApi } from "@/lib/api"
-import { useQuery } from "@tanstack/react-query"
+import { useMutation, useQuery } from "@tanstack/react-query"
 import { Label } from "@/components/molecules/label"
+import { useForm } from "react-hook-form"
+import { Form, FormControl, FormField, FormItem, FormMessage } from "@/components/molecules/form"
 
 const ApplicantsPage = ({ }) => {
   const { data, isLoading } = useQuery({ queryKey: ["fetchApplicants"], queryFn: () => defaultApi.getUsers().then((response) => response.data) })
@@ -355,59 +357,101 @@ const priorities = {
 
 // eslint-disable-next-line max-lines-per-function
 const AddApplicantModal = () => {
+  const { mutateAsync } = useMutation({ mutationKey: ["createApplicant"], mutationFn: (data: PostUserRequest) => defaultApi.postUser(data).then((response) => response.data) })
+  const form = useForm<PostUserRequest>()
+  const [isOpen, setIsOpen] = useState(false)
+
+  const onSubmit = async (data: PostUserRequest) => {
+    console.log({ data })
+    await mutateAsync(data)
+    setIsOpen(false)
+  }
+
   return (
-    <Dialog>
+    <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <DialogTrigger asChild>
         <Button variant="outline">候補者登録</Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">
-        <DialogHeader>
-          <DialogTitle>候補者登録</DialogTitle>
-          <DialogDescription>
-            候補者を登録できます。
-          </DialogDescription>
-        </DialogHeader>
-        <div className="grid gap-4 py-4">
-          <div className="grid grid-cols-4 items-center gap-4">
-            <Label htmlFor="name" className="text-right">
-              名前
-            </Label>
-            <Input id="name" placeholder="候補 太郎" className="col-span-3" />
-          </div>
-          <div className="grid grid-cols-4 items-center gap-4">
-            <Label htmlFor="username" className="text-right">
-              登録ルート
-            </Label>
-            <RegistRootSelect />
-          </div>
-        </div>
-        <DialogFooter>
-          <DialogClose>
-            <Button variant="outline">キャンセル</Button>
-          </DialogClose>
-          <Button type="submit">登録する</Button>
-        </DialogFooter>
+        <Form {...form}>
+          <form onSubmit={form.handleSubmit(onSubmit)}>
+            <DialogHeader>
+              <DialogTitle>候補者登録</DialogTitle>
+              <DialogDescription>
+                候補者を登録できます。
+              </DialogDescription>
+            </DialogHeader>
+            <div className="grid gap-4 py-4">
+              <div className="grid grid-cols-4 items-center gap-4">
+                <Label htmlFor="name" className="text-right">
+                  名前
+                </Label>
+                <FormField
+                  control={form.control}
+                  name="lastName"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormControl>
+                        <Input placeholder="候補" {...field} />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                <FormField
+                  control={form.control}
+                  name="firstName"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormControl>
+                        <Input placeholder="太郎" {...field} />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+              </div>
+              <div className="grid grid-cols-4 items-center gap-4">
+                <Label htmlFor="username" className="text-right">
+                  登録ルート
+                </Label>
+                <FormField
+                  control={form.control}
+                  name="registRoute"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormControl>
+                        <Select onValueChange={field.onChange} defaultValue={field.value}>
+                          <SelectTrigger className="w-[180px]">
+                            <SelectValue placeholder="登録ルートを選択してください" {...field} />
+                          </SelectTrigger>
+                          <SelectContent>
+                            <SelectGroup>
+                              <SelectLabel>登録ルート</SelectLabel>
+                              <SelectItem value="apple">Apple</SelectItem>
+                              <SelectItem value="banana">Banana</SelectItem>
+                              <SelectItem value="blueberry">Blueberry</SelectItem>
+                              <SelectItem value="grapes">Grapes</SelectItem>
+                              <SelectItem value="pineapple">Pineapple</SelectItem>
+                            </SelectGroup>
+                          </SelectContent>
+                        </Select>
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+              </div>
+            </div>
+            <DialogFooter>
+              <DialogClose>
+                <Button variant="outline">キャンセル</Button>
+              </DialogClose>
+              <Button type="submit">登録する</Button>
+            </DialogFooter>
+          </form>
+        </Form>
       </DialogContent>
     </Dialog>
-  )
-}
-
-const RegistRootSelect = () => {
-  return (
-    <Select>
-      <SelectTrigger className="w-[180px]">
-        <SelectValue placeholder="登録ルートを選択してください" />
-      </SelectTrigger>
-      <SelectContent>
-        <SelectGroup>
-          <SelectLabel>登録ルート</SelectLabel>
-          <SelectItem value="apple">Apple</SelectItem>
-          <SelectItem value="banana">Banana</SelectItem>
-          <SelectItem value="blueberry">Blueberry</SelectItem>
-          <SelectItem value="grapes">Grapes</SelectItem>
-          <SelectItem value="pineapple">Pineapple</SelectItem>
-        </SelectGroup>
-      </SelectContent>
-    </Select>
   )
 }

@@ -77,13 +77,73 @@ export interface PostUserRequest {
      * @type {string}
      * @memberof PostUserRequest
      */
-    'email': string;
+    'email'?: string;
     /**
      * 
      * @type {string}
      * @memberof PostUserRequest
      */
-    'dateOfBirth': string;
+    'dateOfBirth'?: string;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof PostUserRequest
+     */
+    'emailVerified'?: boolean;
+    /**
+     * 
+     * @type {string}
+     * @memberof PostUserRequest
+     */
+    'createDate'?: string;
+    /**
+     * 
+     * @type {number}
+     * @memberof PostUserRequest
+     */
+    'referralCount'?: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof PostUserRequest
+     */
+    'preferredWorkLocation'?: string;
+    /**
+     * 
+     * @type {number}
+     * @memberof PostUserRequest
+     */
+    'applicationCount'?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof PostUserRequest
+     */
+    'progress'?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof PostUserRequest
+     */
+    'priority'?: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof PostUserRequest
+     */
+    'personInCharge'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof PostUserRequest
+     */
+    'updatedAt'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof PostUserRequest
+     */
+    'registRoute': string;
 }
 /**
  * 
@@ -230,6 +290,12 @@ export interface User {
      * @memberof User
      */
     'updatedAt'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof User
+     */
+    'registRoute': string;
 }
 
 /**
