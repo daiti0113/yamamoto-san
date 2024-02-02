@@ -36,11 +36,12 @@ import {
   DropdownMenuTrigger
 } from "@/components/organisms/DropdownMenu"
 import { useState } from "react"
+import { User } from "@/types/typescript-axios"
 
 const SamplePage = ({ }) => {
   return (
     <div>
-      <DataTable columns={columns} data={payments} />
+      <DataTable columns={columns} data={users} />
     </div>
   )
 }
@@ -198,18 +199,7 @@ export function DataTable<TData, TValue>({
   )
 }
  
-
- 
-// This type is used to define the shape of our data.
-// You can use a Zod schema here if you want.
-export type Payment = {
-  id: string
-  amount: number
-  status: "pending" | "processing" | "success" | "failed"
-  email: string
-}
- 
-export const columns: ColumnDef<Payment>[] = [
+export const columns: ColumnDef<User>[] = [
   {
     id: "select",
     header: ({ table }) => (
@@ -233,40 +223,31 @@ export const columns: ColumnDef<Payment>[] = [
     enableHiding: false
   },
   {
-    accessorKey: "status",
-    header: "Status"
+    accessorKey: "age",
+    header: "年齢"
   },
   {
-    accessorKey: "email",
+    accessorKey: "preferredWorkLocation",
     header: ({ column }) => {
       return (
         <Button
           variant="ghost"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
-          Email
+          希望勤務地
           <ArrowUpDown className="ml-2 h-4 w-4" />
         </Button>
       )
     }
   },
   {
-    accessorKey: "amount",
-    header: () => <div className="text-right">Amount</div>,
-    cell: ({ row }) => {
-      const amount = parseFloat(row.getValue("amount"))
-      const formatted = new Intl.NumberFormat("en-US", {
-        style: "currency",
-        currency: "USD"
-      }).format(amount)
- 
-      return <div className="text-right font-medium">{formatted}</div>
-    }
+    accessorKey: "referralCount",
+    header: "紹介数"
   },
   {
     id: "actions",
     cell: ({ row }) => {
-      const payment = row.original
+      const user = row.original
  
       return (
         <DropdownMenu>
@@ -279,7 +260,7 @@ export const columns: ColumnDef<Payment>[] = [
           <DropdownMenuContent align="end">
             <DropdownMenuLabel>Actions</DropdownMenuLabel>
             <DropdownMenuItem
-              onClick={() => navigator.clipboard.writeText(payment.id)}
+              onClick={() => navigator.clipboard.writeText(user.id.toString())}
             >
               Copy payment ID
             </DropdownMenuItem>
@@ -293,17 +274,27 @@ export const columns: ColumnDef<Payment>[] = [
   }
 ]
  
-export const payments: Payment[] = [
+export const users: User[] = [
   {
-    id: "728ed52f",
-    amount: 100,
-    status: "pending",
-    email: "m@example.com"
+    id: 1,
+    firstName: "拓巳",
+    lastName: "高橋",
+    email: "takahashi.takumi@gmail.com",
+    dateOfBirth: "1989-01-11",
+    emailVerified: true,
+    createDate: "2023-12-01",
+    referralCount: 23,
+    preferredWorkLocation: "大阪府"
   },
   {
-    id: "489e1d42",
-    amount: 125,
-    status: "processing",
-    email: "example@gmail.com"
+    id: 2,
+    firstName: "花道",
+    lastName: "桜木",
+    email: "hanamichi.sakuragi@gmail.com",
+    dateOfBirth: "1982-12-24",
+    emailVerified: true,
+    createDate: "2024-01-23",
+    referralCount: 1,
+    preferredWorkLocation: "沖縄県"
   }
 ]

@@ -133,6 +133,18 @@ export interface User {
      * @memberof User
      */
     'createDate'?: string;
+    /**
+     * 
+     * @type {number}
+     * @memberof User
+     */
+    'referralCount': number;
+    /**
+     * 
+     * @type {string}
+     * @memberof User
+     */
+    'preferredWorkLocation'?: string;
 }
 
 /**
