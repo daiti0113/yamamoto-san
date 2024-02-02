@@ -37,6 +37,7 @@ import {
 } from "@/components/organisms/DropdownMenu"
 import { useState } from "react"
 import { User } from "@/types/typescript-axios"
+import { calcAge } from "@/lib/date"
 
 const SamplePage = ({ }) => {
   return (
@@ -223,8 +224,14 @@ export const columns: ColumnDef<User>[] = [
     enableHiding: false
   },
   {
+    id: "userName",
+    header: "ユーザー名",
+    accessorFn: (row) => `${row.lastName} ${row.firstName}`
+  },
+  {
     accessorKey: "age",
-    header: "年齢"
+    header: "年齢",
+    accessorFn: (row) => row.dateOfBirth ? calcAge(row.dateOfBirth) : "-"
   },
   {
     accessorKey: "preferredWorkLocation",
