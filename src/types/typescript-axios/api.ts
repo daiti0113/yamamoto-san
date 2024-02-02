@@ -88,6 +88,61 @@ export interface PostUserRequest {
 /**
  * 
  * @export
+ * @interface Progress
+ */
+export interface Progress {
+    /**
+     * 
+     * @type {number}
+     * @memberof Progress
+     */
+    'id': number;
+    /**
+     * 
+     * @type {string}
+     * @memberof Progress
+     */
+    'applicantName': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof Progress
+     */
+    'jobName': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof Progress
+     */
+    'jobCompanyName': string;
+    /**
+     * 
+     * @type {number}
+     * @memberof Progress
+     */
+    'progress': number;
+    /**
+     * 
+     * @type {string}
+     * @memberof Progress
+     */
+    'source': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof Progress
+     */
+    'registeredAt': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof Progress
+     */
+    'updatedAt': string;
+}
+/**
+ * 
+ * @export
  * @interface User
  */
 export interface User {
@@ -183,6 +238,36 @@ export interface User {
  */
 export const DefaultApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
+        /**
+         * 
+         * @summary Your GET endpoint
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getProgresses: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/progresses`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
         /**
          * 
          * @summary Your GET endpoint
@@ -335,6 +420,18 @@ export const DefaultApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
+        async getProgresses(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<Progress>>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getProgresses(options);
+            const index = configuration?.serverIndex ?? 0;
+            const operationBasePath = operationServerMap['DefaultApi.getProgresses']?.[index]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, operationBasePath || basePath);
+        },
+        /**
+         * 
+         * @summary Your GET endpoint
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
         async getUsers(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<User>>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getUsers(options);
             const index = configuration?.serverIndex ?? 0;
@@ -397,6 +494,15 @@ export const DefaultApiFactory = function (configuration?: Configuration, basePa
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
+        getProgresses(options?: any): AxiosPromise<Array<Progress>> {
+            return localVarFp.getProgresses(options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Your GET endpoint
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
         getUsers(options?: any): AxiosPromise<Array<User>> {
             return localVarFp.getUsers(options).then((request) => request(axios, basePath));
         },
@@ -441,6 +547,17 @@ export const DefaultApiFactory = function (configuration?: Configuration, basePa
  * @extends {BaseAPI}
  */
 export class DefaultApi extends BaseAPI {
+    /**
+     * 
+     * @summary Your GET endpoint
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DefaultApi
+     */
+    public getProgresses(options?: RawAxiosRequestConfig) {
+        return DefaultApiFp(this.configuration).getProgresses(options).then((request) => request(this.axios, this.basePath));
+    }
+
     /**
      * 
      * @summary Your GET endpoint

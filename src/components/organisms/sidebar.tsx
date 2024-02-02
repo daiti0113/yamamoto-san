@@ -20,7 +20,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ className }) => {
             <Link href="/progresses">
               <Button variant="secondary" className="w-full justify-start gap-2">
                 <Users size={20} />
-                案件管理
+                進捗管理
               </Button>
             </Link>
             <Link href="/applicants">

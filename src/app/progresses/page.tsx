@@ -20,7 +20,7 @@ import {
   TableHeader,
   TableRow
 } from "@/components/organisms/Table"
-import { ArrowUpDown, MoreHorizontal } from "lucide-react"
+import { MoreHorizontal } from "lucide-react"
 
 import { Button } from "@/components/atoms/button"
 import { Input } from "@/components/molecules/input"
@@ -36,17 +36,17 @@ import {
   DropdownMenuTrigger
 } from "@/components/organisms/DropdownMenu"
 import { useState } from "react"
-import { User } from "@/types/typescript-axios"
-import dayjs, { calcAge } from "@/lib/date"
+import { Progress } from "@/types/typescript-axios"
+import dayjs from "@/lib/date"
 import { defaultApi } from "@/lib/api"
 import { useQuery } from "@tanstack/react-query"
 
 const SamplePage = ({ }) => {
-  const { data, isLoading } = useQuery({ queryKey: ["fetchApplicants"], queryFn: () => defaultApi.getUsers().then((response) => response.data) })
+  const { data, isLoading } = useQuery({ queryKey: ["fetchProgresses"], queryFn: () => defaultApi.getProgresses().then((response) => response.data) })
 
   if (isLoading) return <div>Loading...</div>
 
-  if (!data) return <div>候補者が存在しません</div>
+  if (!data) return <div>進捗情報が存在しません</div>
 
   return (
     <div>
@@ -209,7 +209,7 @@ export function DataTable<TData, TValue>({
   )
 }
  
-export const columns: ColumnDef<User>[] = [
+export const columns: ColumnDef<Progress>[] = [
   {
     id: "select",
     header: ({ table }) => (
@@ -233,36 +233,16 @@ export const columns: ColumnDef<User>[] = [
     enableHiding: false
   },
   {
-    id: "userName",
-    header: "ユーザー名",
-    accessorFn: (row) => `${row.lastName} ${row.firstName}`
+    accessorKey: "applicantName",
+    header: "ユーザー名"
   },
   {
-    accessorKey: "age",
-    header: "年齢",
-    accessorFn: (row) => row.dateOfBirth ? calcAge(row.dateOfBirth) : "-"
+    accessorKey: "jobName",
+    header: "求人名"
   },
   {
-    accessorKey: "preferredWorkLocation",
-    header: ({ column }) => {
-      return (
-        <Button
-          variant="ghost"
-          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-        >
-          希望勤務地
-          <ArrowUpDown className="ml-2 h-4 w-4" />
-        </Button>
-      )
-    }
-  },
-  {
-    accessorKey: "referralCount",
-    header: "紹介数"
-  },
-  {
-    accessorKey: "applicationCount",
-    header: "応募数"
+    accessorKey: "jobCompanyName",
+    header: "求人会社名"
   },
   {
     accessorKey: "progress",
@@ -270,13 +250,13 @@ export const columns: ColumnDef<User>[] = [
     accessorFn: (row) => progresses[row.progress as keyof typeof progresses]
   },
   {
-    accessorKey: "priority",
-    header: "優先度",
-    accessorFn: (row) => priorities[row.priority as keyof typeof priorities]
+    accessorKey: "source",
+    header: "媒体元"
   },
   {
-    accessorKey: "personInCharge",
-    header: "担当"
+    accessorKey: "registeredAt",
+    header: "登録日",
+    accessorFn: (row) => dayjs(row.updatedAt).format("YYYY/MM/DD")
   },
   {
     accessorKey: "updatedAt",
@@ -318,10 +298,4 @@ const progresses = {
   2: "1次調整中",
   3: "2次調整中",
   4: "3次調整中"
-}
-
-const priorities = {
-  1: "高",
-  2: "中",
-  3: "低"
 }

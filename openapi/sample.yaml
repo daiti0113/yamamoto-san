@@ -193,6 +193,22 @@ paths:
                       updatedAt: '2024-01-13'
       operationId: get-users
     parameters: []
+  /progresses:
+    get:
+      summary: Your GET endpoint
+      tags: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Progress'
+                  x-stoplight:
+                    id: 02wq2wnjdvys7
+      operationId: get-progresses
 components:
   schemas:
     User:
@@ -270,3 +286,55 @@ components:
         - applicationCount
         - progress
         - priority
+    Progress:
+      title: Progress
+      x-stoplight:
+        id: s58n434sb6ho0
+      type: object
+      properties:
+        id:
+          type: integer
+        applicantName:
+          type: string
+          x-stoplight:
+            id: wnjur08bgs71x
+          example: 高橋 拓巳
+        jobName:
+          type: string
+          x-stoplight:
+            id: iilkva0yzjagi
+          example: 【カスタマーサポート】☆海外勤務の夢がグッと現実になる！
+        jobCompanyName:
+          type: string
+          x-stoplight:
+            id: g94i93lcyoua3
+          example: Webhelp Malaysia Sdn. Bhd.
+        progress:
+          type: integer
+          x-stoplight:
+            id: fanf42e1upudu
+          default: 1
+        source:
+          type: string
+          x-stoplight:
+            id: xeq19vgeo62wl
+          example: HARMOS
+        registeredAt:
+          type: string
+          x-stoplight:
+            id: m2jwmj0hvaxbl
+          example: '2023-07-11'
+        updatedAt:
+          type: string
+          x-stoplight:
+            id: jppbvolklbjqi
+          example: '2024-01-24'
+      required:
+        - id
+        - applicantName
+        - jobName
+        - jobCompanyName
+        - progress
+        - source
+        - registeredAt
+        - updatedAt
