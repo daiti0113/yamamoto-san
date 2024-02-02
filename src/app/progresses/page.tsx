@@ -38,11 +38,19 @@ import {
 import { useState } from "react"
 import { User } from "@/types/typescript-axios"
 import dayjs, { calcAge } from "@/lib/date"
+import { defaultApi } from "@/lib/api"
+import { useQuery } from "@tanstack/react-query"
 
 const SamplePage = ({ }) => {
+  const { data, isLoading } = useQuery({ queryKey: ["fetchApplicants"], queryFn: () => defaultApi.getUsers().then((response) => response.data) })
+
+  if (isLoading) return <div>Loading...</div>
+
+  if (!data) return <div>候補者が存在しません</div>
+
   return (
     <div>
-      <DataTable columns={columns} data={users} />
+      <DataTable columns={columns} data={data} />
     </div>
   )
 }
@@ -304,41 +312,6 @@ export const columns: ColumnDef<User>[] = [
   }
 ]
  
-export const users: User[] = [
-  {
-    id: 1,
-    firstName: "拓巳",
-    lastName: "高橋",
-    email: "takahashi.takumi@gmail.com",
-    dateOfBirth: "1989-01-11",
-    emailVerified: true,
-    createDate: "2023-12-01",
-    referralCount: 23,
-    preferredWorkLocation: "大阪府",
-    applicationCount: 11,
-    progress: 4,
-    priority: 1,
-    personInCharge: "赤井 大輔",
-    updatedAt: "2024-01-12"
-  },
-  {
-    id: 2,
-    firstName: "花道",
-    lastName: "桜木",
-    email: "hanamichi.sakuragi@gmail.com",
-    dateOfBirth: "1982-12-24",
-    emailVerified: true,
-    createDate: "2024-01-23",
-    referralCount: 1,
-    preferredWorkLocation: "沖縄県",
-    applicationCount: 4,
-    progress: 2,
-    priority: 2,
-    personInCharge: "砂川 大地",
-    updatedAt: "2024-01-13"
-  }
-]
-
 const progresses = {
   1: "書類選考",
   2: "1次調整中",
