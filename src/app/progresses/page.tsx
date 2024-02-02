@@ -63,6 +63,7 @@ interface DataTableProps<TData, TValue> {
   data: TData[]
 }
 
+// TODO: コンポーネントの分割（TableHeaderなどに分割する）
 // eslint-disable-next-line max-lines-per-function
 export function DataTable<TData, TValue>({
   columns,
