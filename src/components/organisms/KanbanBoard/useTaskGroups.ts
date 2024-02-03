@@ -18,6 +18,8 @@ export const useTaskGroups = (): {
   swapTasks: (dragIndex: number, hoverIndex: number, groupName: string) => void,
   // eslint-disable-next-line no-unused-vars
   deleteTasks: (target: DraggableItem) => void
+  // eslint-disable-next-line no-unused-vars
+  setTaskGroups: (taskGroups?: DraggableItem[]) => void
 } => {
   const [taskGroups, setTaskGroups] = useState<DraggableItem[]>()
   const [tasks, updateTasks, swapTasks, alignTasks, deleteTasks] = useTasks()
@@ -61,6 +63,7 @@ export const useTaskGroups = (): {
     tasks: tasks ?? [],
     updateTasks,
     swapTasks,
-    deleteTasks
+    deleteTasks,
+    setTaskGroups
   }
 }

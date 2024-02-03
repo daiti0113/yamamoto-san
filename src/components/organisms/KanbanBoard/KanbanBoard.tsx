@@ -1,7 +1,7 @@
 import { DndProvider } from "react-dnd"
 import { DraggableItem } from "./item"
 import { HTML5Backend } from "react-dnd-html5-backend"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { Draggable } from "./Draggable"
 import { Column } from "./Column"
 import { NewColumnButton } from "./NewColumnButton"
@@ -20,6 +20,9 @@ type KanbanBoardProps = {
   swapTasks: (dragIndex: number, hoverIndex: number, groupName: string) => void
   // eslint-disable-next-line no-unused-vars
   deleteTasks: (target: DraggableItem) => void
+  defaultTaskGroups?: DraggableItem[]
+  // eslint-disable-next-line no-unused-vars
+  setTaskGroups: (taskGroups?: DraggableItem[]) => void
 }
 
 // TODO: useDialog に変更
@@ -42,8 +45,16 @@ export const KanbanBoard: React.FC<KanbanBoardProps> = ({
   tasks,
   updateTasks,
   swapTasks,
-  deleteTasks
+  deleteTasks,
+  defaultTaskGroups,
+  setTaskGroups
 }) => {
+
+  // TODO: もっといい初期値の渡し方があるはず。要検討。
+  useEffect(() => {
+    setTaskGroups(defaultTaskGroups)
+  }, [])
+
   const [showModal, updateShowModal] = useShowModal()
   let index = 0
   return (
