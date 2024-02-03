@@ -66,6 +66,7 @@ import { useMutation, useQuery } from "@tanstack/react-query"
 import { Label } from "@/components/molecules/label"
 import { useForm } from "react-hook-form"
 import { Form, FormControl, FormField, FormItem, FormMessage } from "@/components/molecules/form"
+import Link from "next/link"
 
 const ApplicantsPage = ({ }) => {
   const { data, isLoading } = useQuery({ queryKey: ["fetchApplicants"], queryFn: () => defaultApi.getUsers().then((response) => response.data) })
@@ -264,7 +265,7 @@ export const columns: ColumnDef<User>[] = [
   {
     id: "userName",
     header: "ユーザー名",
-    accessorFn: (row) => `${row.lastName} ${row.firstName}`
+    cell: ({ row }) => <Link href={`/applicants/${row.original.id}`}>{row.original.lastName} {row.original.firstName}</Link>
   },
   {
     accessorKey: "age",
