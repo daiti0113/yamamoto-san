@@ -5,20 +5,20 @@ import { v4 as uuidv4 } from "uuid"
 import { useTasks } from "./useTasks"
 
 // eslint-disable-next-line max-lines-per-function
-export const useTaskGroups = (): [
-  DraggableItem[],
+export const useTaskGroups = (): {
+  taskGroups: DraggableItem[],
   // eslint-disable-next-line no-unused-vars
-  (name: string) => void,
+  updateTaskGroups: (name: string) => void,
   // eslint-disable-next-line no-unused-vars
-  (indexI: number, indexJ: number) => void,
-  DraggableItem[],
+  swapTaskGroups: (indexI: number, indexJ: number) => void,
+  tasks: DraggableItem[],
   // eslint-disable-next-line no-unused-vars
-  (newTask: DraggableItem, index: number) => void,
+  updateTasks: (newTask: DraggableItem, index: number) => void,
   // eslint-disable-next-line no-unused-vars
-  (dragIndex: number, hoverIndex: number, groupName: string) => void,
+  swapTasks: (dragIndex: number, hoverIndex: number, groupName: string) => void,
   // eslint-disable-next-line no-unused-vars
-  (target: DraggableItem) => void
-] => {
+  deleteTasks: (target: DraggableItem) => void
+} => {
   const [taskGroups, setTaskGroups] = useState<DraggableItem[]>()
   const [tasks, updateTasks, swapTasks, alignTasks, deleteTasks] = useTasks()
 
@@ -54,13 +54,13 @@ export const useTaskGroups = (): [
     [alignTasks]
   )
 
-  return [
-    taskGroups ?? [],
+  return {
+    taskGroups: taskGroups ?? [],
     updateTaskGroups,
     swapTaskGroups,
-    tasks ?? [],
+    tasks: tasks ?? [],
     updateTasks,
     swapTasks,
     deleteTasks
-  ]
+  }
 }
