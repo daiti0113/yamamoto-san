@@ -59,44 +59,42 @@ export const KanbanBoard: React.FC<KanbanBoardProps> = ({
   let index = 0
   return (
     <DndProvider backend={HTML5Backend}>
-      <div className="h-screen">
-        <div className="mt-8 h-full">
-          <div className="m-4 h-full">
-            <div className="flex h-full gap-4">
-              {taskGroups.map((taskGroup, columnIndex) => {
-                const groupedTasks = tasks.filter((task) => {
-                  return task.groupName === taskGroup.groupName
-                })
-                const firstIndex = index
-                index = index + groupedTasks.length
-                return (
-                  <li key={taskGroup.key} className="list-none">
-                    <Draggable
-                      item={taskGroup}
-                      index={columnIndex}
-                      swapItems={swapTaskGroups}
-                    >
-                      <Column
-                        columnName={taskGroup.groupName}
-                        firstIndex={firstIndex}
-                        tasks={groupedTasks}
-                        updateTasks={updateTasks}
-                        deleteTasks={deleteTasks}
-                        swapTasks={swapTasks}
-                      ></Column>
-                    </Draggable>
-                  </li>
-                )
-              })}
-              <NewColumnButton
-                updateShowModal={updateShowModal}
-              />
-              <AddAColumnModal
-                showModal={showModal}
-                updateShowModal={updateShowModal}
-                updateNewColumnName={updateTaskGroups}
-              ></AddAColumnModal>
-            </div>
+      <div className="mt-8 h-full">
+        <div className="m-4 h-full">
+          <div className="flex h-full gap-4">
+            {taskGroups.map((taskGroup, columnIndex) => {
+              const groupedTasks = tasks.filter((task) => {
+                return task.groupName === taskGroup.groupName
+              })
+              const firstIndex = index
+              index = index + groupedTasks.length
+              return (
+                <li key={taskGroup.key} className="list-none">
+                  <Draggable
+                    item={taskGroup}
+                    index={columnIndex}
+                    swapItems={swapTaskGroups}
+                  >
+                    <Column
+                      columnName={taskGroup.groupName}
+                      firstIndex={firstIndex}
+                      tasks={groupedTasks}
+                      updateTasks={updateTasks}
+                      deleteTasks={deleteTasks}
+                      swapTasks={swapTasks}
+                    ></Column>
+                  </Draggable>
+                </li>
+              )
+            })}
+            <NewColumnButton
+              updateShowModal={updateShowModal}
+            />
+            <AddAColumnModal
+              showModal={showModal}
+              updateShowModal={updateShowModal}
+              updateNewColumnName={updateTaskGroups}
+            />
           </div>
         </div>
       </div>

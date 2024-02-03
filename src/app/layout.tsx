@@ -28,7 +28,7 @@ export default function RootLayout({
           <Header />
           <div className="flex h-full">
             <Sidebar className="h-full max-w-80 border-r-[1px]" />
-            <main className="py-7 px-6 w-full">
+            <main className="py-7 px-6 w-full overflow-hidden">
               {children}
             </main>
           </div>
