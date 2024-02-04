@@ -65,7 +65,7 @@ interface DataTableProps<TData, TValue> {
 
 // TODO: コンポーネントの分割（TableHeaderなどに分割する）
 // eslint-disable-next-line max-lines-per-function
-export function DataTable<TData, TValue>({
+function DataTable<TData, TValue>({
   columns,
   data
 }: DataTableProps<TData, TValue>) {
@@ -209,7 +209,7 @@ export function DataTable<TData, TValue>({
   )
 }
  
-export const columns: ColumnDef<Progress>[] = [
+const columns: ColumnDef<Progress>[] = [
   {
     id: "select",
     header: ({ table }) => (
